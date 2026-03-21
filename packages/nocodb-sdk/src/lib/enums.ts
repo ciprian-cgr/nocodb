@@ -297,6 +297,8 @@ export enum AppEvents {
   CHAT_MESSAGE_CREATE = 'chat.message.create',
   CHAT_TOOL_EXECUTE = 'chat.tool.execute',
 
+  FIELD_AGENT_ROWS_UPDATE = 'field.agent.rows.update',
+
   DOCUMENT_CREATE = 'document.create',
   DOCUMENT_UPDATE = 'document.update',
   DOCUMENT_DELETE = 'document.delete',

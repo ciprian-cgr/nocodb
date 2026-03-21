@@ -93,6 +93,8 @@ export enum PlanFeatureTypes {
   FEATURE_DOCS_APIS = 'feature_docs_apis',
   FEATURE_DOCS_INLINE_COMMENTS = 'feature_docs_inline_comments',
   FEATURE_DOCS_EXPORT_PDF = 'feature_docs_export_pdf',
+  FEATURE_DOCUMENT_PERMISSIONS = 'feature_document_permissions',
+  FEATURE_FIELD_AGENT = 'feature_field_agent',
 }
 
 export enum PlanTitles {
@@ -341,6 +343,9 @@ export const PlanFeatureUpgradeMessages: Record<PlanFeatureTypes, string> = {
     'to use inline comments in documents.',
   [PlanFeatureTypes.FEATURE_DOCS_EXPORT_PDF]:
     'to export documents as PDF.',
+  [PlanFeatureTypes.FEATURE_DOCUMENT_PERMISSIONS]:
+    'to use document permissions.',
+  [PlanFeatureTypes.FEATURE_FIELD_AGENT]: 'to use AI field agents.',
 };
 
 export const getUpgradeMessage = (

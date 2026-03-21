@@ -65,6 +65,7 @@ export enum JobTypes {
   HookErrorNotification = 'hook-error-notification',
   ChatMessage = 'chat-message',
   ChatApproval = 'chat-approval',
+  FieldAgentGenerate = 'field-agent-generate',
 }
 
 export const SKIP_STORING_JOB_META = [
@@ -87,6 +88,7 @@ export const SKIP_STORING_JOB_META = [
   JobTypes.HookErrorNotification,
   JobTypes.ChatMessage,
   JobTypes.ChatApproval,
+  JobTypes.FieldAgentGenerate,
 ];
 
 export enum JobStatus {
@@ -325,4 +327,12 @@ export interface ChatApprovalJobData extends JobData {
   sessionId: string;
   messageId: string;
   decisions: Record<string, 'approved' | 'denied'>;
+}
+
+export interface FieldAgentGenerateJobData extends JobData {
+  modelId: string;
+  columnId: string;
+  mode: 'all' | 'unmodified' | 'modified';
+  viewId?: string;
+  req: NcRequest;
 }

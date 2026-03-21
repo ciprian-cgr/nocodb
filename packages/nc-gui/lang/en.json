@@ -2940,6 +2940,8 @@
       "youCanOnlyUploadMaxLimitFilesAtATimePlural": "You can only upload {limit} {type} files at a time"
     },
     "info": {
+      "aiAgentStarted": "AI agent started for \"{title}\"...",
+      "aiAgentProcessed": "AI agent processed {count} row | AI agent processed {count} rows",
       "convertLinkV2Description": "This will convert the link to use a junction table internally, keeping all existing linked data intact.",
       "convertLinkV2OriginalBecomesRollup": "will become a Rollup showing the linked record count (preserves existing formulas, filters, and sorts)",
       "convertLinkV2NewLtarCreated": "A new Link field will be created next to it, showing the actual linked records",
@@ -3191,6 +3193,7 @@
       "workspaceTeamRoleUpdateNotice": "Changing a team’s workspace role will also update its access to bases where it doesn’t have an explicit role."
     },
     "error": {
+      "fieldAgentJobFailed": "Field agent job failed",
       "latitudeRange": "Latitude must be between -90 and 90",
       "longitudeRange": "Longitude must be between -180 and 180",
       "passwordChangeFailed": "Failed to change password",

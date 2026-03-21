@@ -1,13 +1,21 @@
+import { isFieldAgentCol } from 'nocodb-sdk'
 import { renderSingleLineText, renderTag, truncateText } from '../utils/canvas'
 import type { getSingleMultiselectColOptions } from '../utils/cell'
+import { AISelectCellRenderer } from './AISelect'
 
 const tagPadding = 8
 const tagHeight = 22
 const topPadding = 4
 
 export const SingleSelectCellRenderer: CellRenderer = {
-  render: (ctx, { column, value, x, y, width, pv, padding, isDark }) => {
+  render: (ctx, props) => {
+    const { column, value, x, y, width, pv, padding, isDark } = props
     const text = value?.toString()?.trim() ?? ''
+
+    // Field Agent: show Generate button when empty
+    if (!text && isFieldAgentCol(column)) {
+      return AISelectCellRenderer.render(ctx, props)
+    }
 
     // If it is empty text then no need to render
     if (!text) return
@@ -77,7 +85,13 @@ export const SingleSelectCellRenderer: CellRenderer = {
     })
   },
 
-  async handleClick({ row, column, makeCellEditable, selected }) {
+  async handleClick(props) {
+    const { row, column, makeCellEditable, selected, value } = props
+
+    if (isFieldAgentCol(column?.columnObj) && !value) {
+      return AISelectCellRenderer.handleClick!(props)
+    }
+
     if (column.readonly || column.columnObj?.readonly || !column?.isCellEditable || column.isSyncedColumn || !selected)
       return false
 
@@ -85,7 +99,13 @@ export const SingleSelectCellRenderer: CellRenderer = {
     return true
   },
 
-  async handleKeyDown({ e, row, column, makeCellEditable }) {
+  async handleKeyDown(ctx) {
+    const { e, row, column, makeCellEditable, value } = ctx
+
+    if (isFieldAgentCol(column?.columnObj) && !value) {
+      return AISelectCellRenderer.handleKeyDown!(ctx)
+    }
+
     if (column.readonly || column.columnObj?.readonly || column.isSyncedColumn || !column?.isCellEditable) return false
     if (e.key.length === 1 || e.key === 'Enter') {
       makeCellEditable(row, column)

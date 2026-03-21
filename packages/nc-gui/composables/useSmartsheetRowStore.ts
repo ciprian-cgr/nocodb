@@ -54,7 +54,7 @@ const [useProvideSmartsheetRowStore, useSmartsheetRowStore] = useInjectionState(
   'smartsheet-row-store',
 )
 
-export { useProvideSmartsheetRowStore }
+export { useProvideSmartsheetRowStore, useSmartsheetRowStore }
 
 export function useSmartsheetRowStoreOrThrow() {
   const smartsheetRowStore = useSmartsheetRowStore()

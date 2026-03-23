@@ -148,6 +148,7 @@ export class MetaService {
       [MetaTable.RECORD_TEMPLATES]: 'rt',
       [MetaTable.AUTOMATION_SUBSCRIBERS]: 'as',
       [MetaTable.DOCS]: 'doc',
+      [MetaTable.API_TOKEN_SCOPES]: 'ats',
     };
 
     const prefix = prefixMap[target] || 'nc';

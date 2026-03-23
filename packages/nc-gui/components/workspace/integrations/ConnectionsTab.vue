@@ -46,6 +46,19 @@ const toBeDeletedIntegration = ref<
 
 const isLoadingGetLinkedSources = ref(false)
 
+// Base assignment dialog state
+const isBaseAssignmentOpen = ref(false)
+const baseAssignmentIntegration = ref<IntegrationType | null>(null)
+
+function openBaseAssignment(integration: IntegrationType) {
+  baseAssignmentIntegration.value = integration
+  isBaseAssignmentOpen.value = true
+}
+
+function onBaseAssignmentUpdated() {
+  loadIntegrations()
+}
+
 const tableWrapper = ref<HTMLDivElement>()
 
 const orderBy = ref<Partial<Record<SortFields, 'asc' | 'desc' | undefined>>>({})
@@ -279,6 +292,16 @@ const columns = [
     dataIndex: 'source_count',
     showOrderBy: true,
   },
+  ...(isEeUI
+    ? [
+        {
+          key: 'base_access',
+          title: t('labels.baseAccess'),
+          minWidth: 140,
+          width: 160,
+        },
+      ]
+    : []),
   {
     key: 'action',
     title: t('labels.actions'),
@@ -432,6 +455,29 @@ const customRow = (record: Record<string, any>) => ({
           </NcTooltip>
         </template>
 
+        <div v-if="column.key === 'base_access'" class="text-sm">
+          <NcBadge
+            v-if="!integration.is_restricted"
+            size="xs"
+            color="green"
+            :border="false"
+            class="cursor-pointer"
+            @click.stop="openBaseAssignment(integration)"
+          >
+            {{ $t('activity.allBases') }}
+          </NcBadge>
+          <NcBadge
+            v-else
+            size="xs"
+            color="gray"
+            :border="false"
+            class="cursor-pointer"
+            @click.stop="openBaseAssignment(integration)"
+          >
+            {{ $t('labels.restricted') }}
+          </NcBadge>
+        </div>
+
         <div v-if="column.key === 'action'" @click.stop>
           <NcDropdown placement="bottomRight">
             <NcButton size="small" type="secondary">
@@ -445,6 +491,10 @@ const customRow = (record: Record<string, any>) => ({
                 >
                   <GeneralIcon class="text-current opacity-80" icon="star" />
                   <span>Set as default</span>
+                </NcMenuItem>
+                <NcMenuItem v-if="isEeUI" @click="openBaseAssignment(integration)">
+                  <GeneralIcon class="text-current opacity-80" icon="ncDatabase" />
+                  <span>{{ $t('labels.manageBaseAccess') }}</span>
                 </NcMenuItem>
                 <NcMenuItem
                   :disabled="!isFeatureEnabled(FEATURE_FLAG.DATA_REFLECTION) && integration.sub_type === SyncDataType.NOCODB"
@@ -626,6 +676,14 @@ const customRow = (record: Record<string, any>) => ({
         </div>
       </div>
     </NcModal>
+
+    <!-- Base Assignment Dialog -->
+    <WorkspaceIntegrationsBaseAssignment
+      v-if="isEeUI && baseAssignmentIntegration"
+      v-model:visible="isBaseAssignmentOpen"
+      :integration="baseAssignmentIntegration"
+      @updated="onBaseAssignmentUpdated"
+    />
   </div>
 </template>
 

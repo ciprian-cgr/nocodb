@@ -95,7 +95,10 @@ export interface MetaPayload<T = any> extends BaseSocketPayload {
     | 'extension_update'
     | 'extension_create'
     | 'extension_delete'
-    | 'rls_policy_update';
+    | 'rls_policy_update'
+    | 'document_permission_update'
+    | 'date_dependency_update'
+    | 'date_dependency_delete';
   payload: T;
   baseId?: string;
 }

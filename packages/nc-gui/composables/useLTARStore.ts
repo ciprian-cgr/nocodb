@@ -38,10 +38,6 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
       currentRow.value = row.value
     }
 
-    if (isEeUI) {
-      _reloadData = (_params: { shouldShowLoading?: boolean }) => {}
-    }
-
     // state
     const { getMeta, getMetaByKey, getPartialMeta, metas } = useMetas()
 
@@ -774,6 +770,9 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
         isChildrenListLinked.value[index] = false
         if (!isSingleTargetRelation.value) {
           childrenListCount.value = childrenListCount.value - 1
+        } else {
+          // Update local state for single-target relations
+          currentRow.value.row[column.value.title] = null
         }
       } catch (e: any) {
         message.error(`${t('msg.error.unlinkFailed')}: ${await extractSdkResponseErrorMsg(e)}`)
@@ -865,6 +864,9 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
         } else {
           isChildrenExcludedListLinked.value = Array(childrenExcludedList.value?.list.length).fill(false)
           isChildrenExcludedListLinked.value[index] = true
+
+          // Update local state for single-target relations
+          currentRow.value.row[column.value.title] = row
         }
       } catch (e: any) {
         message.error(`Linking failed: ${await extractSdkResponseErrorMsg(e)}`)

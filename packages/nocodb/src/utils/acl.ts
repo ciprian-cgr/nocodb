@@ -251,6 +251,7 @@ const permissionScopes = {
     'baseIntegrationList',
 
     'baseIntegrationCreate',
+    'baseIntegrationUpdate',
     'baseIntegrationLink',
     'baseIntegrationUnlink',
   ],
@@ -765,6 +766,7 @@ const permissionDescriptions: Record<string, string> = {
   baseIntegrationList: 'view integrations linked to a base',
 
   baseIntegrationCreate: 'create an integration from a base',
+  baseIntegrationUpdate: 'update an integration from a base',
   baseIntegrationLink: 'link an integration to a base',
   baseIntegrationUnlink: 'unlink an integration from a base',
 

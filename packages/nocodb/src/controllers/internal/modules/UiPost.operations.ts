@@ -143,6 +143,7 @@ export class UiPostOperations
     'listViewUpdate' as const,
     'convertLinkToV2' as const,
     'baseIntegrationCreate' as const,
+    'baseIntegrationUpdate' as const,
     'baseIntegrationLink' as const,
     'baseIntegrationUnlink' as const,
     'integrationUpdateLinkedBases' as const,
@@ -693,6 +694,13 @@ export class UiPostOperations
       case 'baseIntegrationCreate':
         return await this.baseIntegrationsService.createFromBase(context, {
           baseId: context.base_id,
+          integration: payload,
+          req,
+        });
+      case 'baseIntegrationUpdate':
+        return await this.baseIntegrationsService.updateFromBase(context, {
+          baseId: context.base_id,
+          integrationId: req.query.integrationId as string,
           integration: payload,
           req,
         });

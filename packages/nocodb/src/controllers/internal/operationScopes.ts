@@ -166,6 +166,7 @@ export const OPERATION_SCOPES = {
   // Base-scoped integrations
   baseIntegrationList: 'base',
   baseIntegrationCreate: 'base',
+  baseIntegrationUpdate: 'base',
   baseIntegrationLink: 'base',
   baseIntegrationUnlink: 'base',
 

@@ -1,6 +1,12 @@
 import type { AttachmentUrlUploadParam } from '~/types/data-columns/attachment';
 import type {
+  AttachmentReqType,
   AttachmentResType,
+  FileImportColumn,
+  FileImportColumnMapping,
+  FileImportOptions,
+  FileImportParserConfig,
+  FileImportType,
   PublicAttachmentScope,
   SnapshotType,
   SupportedExportCharset,
@@ -66,6 +72,7 @@ export enum JobTypes {
   WorkflowDraftReminder = 'workflow-draft-reminder',
   ChatMessage = 'chat-message',
   ChatApproval = 'chat-approval',
+  DataImport = 'data-import',
 }
 
 export const SKIP_STORING_JOB_META = [
@@ -327,4 +334,18 @@ export interface ChatApprovalJobData extends JobData {
   sessionId: string;
   messageId: string;
   decisions: Record<string, 'approved' | 'denied'>;
+}
+
+export interface DataImportJobData extends JobData {
+  baseId: string;
+  sourceId: string;
+  importType?: FileImportType;
+  tableId?: string;
+  tableName?: string;
+  attachment: AttachmentReqType;
+  columns: FileImportColumn[];
+  parserConfig: FileImportParserConfig;
+  options: FileImportOptions;
+  columnMapping?: FileImportColumnMapping[];
+  req: NcRequest;
 }

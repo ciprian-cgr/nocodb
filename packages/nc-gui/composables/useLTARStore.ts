@@ -60,7 +60,8 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
 
     const path = inject(GroupPathInj, ref([]))
 
-    // In canvas _reloadData will not work as we unmount editable component so on undo/redo we have to manually trigger view reload
+    // Always trigger view reload directly after link/unlink to ensure grid updates
+    // regardless of whether _reloadData chain propagates (e.g. non-infinite-scroll Table mode)
     const reloadViewDataTrigger = isEeUI ? createEventHook() : inject(ReloadViewDataHookInj, createEventHook())
 
     const { addUndo, clone, defineViewScope } = useUndoRedo()
@@ -700,6 +701,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
             }
 
             _reloadData?.({ shouldShowLoading: false, path: path.value })
+            reloadViewDataTrigger.trigger({ shouldShowLoading: false })
 
             /** reload child list if not a new row */
             if (!isNewRow?.value) {
@@ -783,10 +785,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
       }
 
       _reloadData?.({ shouldShowLoading: false, path: path.value })
-
-      if (undo && isCanvasInjected) {
-        reloadViewDataTrigger.trigger({ shouldShowLoading: false })
-      }
+      reloadViewDataTrigger.trigger({ shouldShowLoading: false })
 
       $e('a:links:unlink')
     }
@@ -876,10 +875,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
       }
 
       _reloadData?.({ shouldShowLoading: false, path: path.value })
-
-      if (undo && isCanvasInjected) {
-        reloadViewDataTrigger.trigger({ shouldShowLoading: false })
-      }
+      reloadViewDataTrigger.trigger({ shouldShowLoading: false })
 
       $e('a:links:link')
     }

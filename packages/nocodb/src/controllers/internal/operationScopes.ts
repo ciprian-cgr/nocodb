@@ -162,9 +162,4 @@ export const OPERATION_SCOPES = {
 
   // LTAR V2 conversion
   convertLinkToV2: 'base',
-
-  // Date Dependency
-  getDateDependency: 'base',
-  updateDateDependency: 'base',
-  deleteTableDateDependency: 'base',
 } as const;

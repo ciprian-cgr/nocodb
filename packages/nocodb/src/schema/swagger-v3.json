@@ -13591,10 +13591,6 @@
                   "type": "boolean",
                   "description": "Whether the workflow is enabled"
                 },
-                "order": {
-                  "type": "number",
-                  "description": "Display order of the workflow"
-                },
                 "created_at": {
                   "type": "string",
                   "format": "date-time",
@@ -14290,10 +14286,6 @@
           "options": {
             "$ref": "#/components/schemas/WorkflowOptions",
             "description": "Workflow options including execution configuration and display settings"
-          },
-          "order": {
-            "type": "number",
-            "description": "Display order of the workflow"
           },
           "created_at": {
             "type": "string",

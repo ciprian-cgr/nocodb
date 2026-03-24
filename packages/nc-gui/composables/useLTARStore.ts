@@ -783,9 +783,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
 
       _reloadData?.({ shouldShowLoading: false, path: path.value })
 
-      if (undo && isCanvasInjected) {
-        reloadViewDataTrigger.trigger({ shouldShowLoading: false })
-      }
+      reloadViewDataTrigger.trigger({ shouldShowLoading: false })
 
       $e('a:links:unlink')
     }
@@ -879,9 +877,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
 
       _reloadData?.({ shouldShowLoading: false, path: path.value })
 
-      if (undo && isCanvasInjected) {
-        reloadViewDataTrigger.trigger({ shouldShowLoading: false })
-      }
+      reloadViewDataTrigger.trigger({ shouldShowLoading: false })
 
       $e('a:links:link')
     }

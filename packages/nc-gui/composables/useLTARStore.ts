@@ -56,11 +56,9 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
     const activeView = inject(ActiveViewInj, ref())
     const isForm = inject(IsFormInj, ref(false))
 
-    const isCanvasInjected = inject(IsCanvasInjectionInj, false)
-
     const path = inject(GroupPathInj, ref([]))
 
-    // In canvas _reloadData will not work as we unmount editable component so on undo/redo we have to manually trigger view reload
+    // _reloadData alone is not sufficient in every LTAR flow, so trigger a view refresh after link/unlink as well.
     const reloadViewDataTrigger = isEeUI ? createEventHook() : inject(ReloadViewDataHookInj, createEventHook())
 
     const { addUndo, clone, defineViewScope } = useUndoRedo()
@@ -787,9 +785,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
 
       _reloadData?.({ shouldShowLoading: false, path: path.value })
 
-      if (undo && isCanvasInjected) {
-        reloadViewDataTrigger.trigger({ shouldShowLoading: false })
-      }
+      reloadViewDataTrigger.trigger({ shouldShowLoading: false })
 
       $e('a:links:unlink')
     }
@@ -880,9 +876,7 @@ const [useProvideLTARStore, useLTARStore] = useInjectionState(
 
       _reloadData?.({ shouldShowLoading: false, path: path.value })
 
-      if (undo && isCanvasInjected) {
-        reloadViewDataTrigger.trigger({ shouldShowLoading: false })
-      }
+      reloadViewDataTrigger.trigger({ shouldShowLoading: false })
 
       $e('a:links:link')
     }
